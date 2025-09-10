@@ -1,10 +1,9 @@
 // Importa hooks e tipos do React
-import { JSX, useEffect, useState } from 'react'; 
+import { JSX, useEffect, useState } from 'react';
 
 // Importa os componentes da biblioteca PrimeReact
 import { DataTable } from 'primereact/datatable'; // Tabela responsiva com recursos como paginação e ordenação
 import { Column } from 'primereact/column'; // Representa uma coluna da tabela
-import { Button } from 'primereact/button'; // Botão estilizado da PrimeReact
 
 // Importa o serviço responsável pelas requisições relacionadas a livros
 import LivroRequests from '../../../fetch/LivroRequests';
@@ -12,16 +11,13 @@ import LivroRequests from '../../../fetch/LivroRequests';
 // Importa o arquivo CSS com estilos específicos para este componente
 import estilo from './TabelaLivro.module.css';
 import LivroDTO from '../../../interfaces/LivroInterface';
+
 import { APP_ROUTES } from '../../../appConfig';
 
 // Declara o componente funcional TabelaLivro
 function TabelaLivro(): JSX.Element {
     // Hook useState para armazenar a lista de livros
     const [livros, setLivros] = useState<LivroDTO[]>([]);
-
-    // Botões personalizados para a paginação da tabela (utilizado pelo componente DataTable da lib PrimeReact)
-    const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
-    const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 
     // Hook useEffect para buscar os livros na primeira renderização do componente
     useEffect(() => {
@@ -46,7 +42,7 @@ function TabelaLivro(): JSX.Element {
                 href={APP_ROUTES.ROUTE_CADASTRO_LIVRO}
                 className={estilo['anc-pag-cadastro']}
             >
-                CADASTRAR LIVRO
+                CADASTRAR ALUNO
             </a>
 
             {/* Componente DataTable da PrimeReact, responsável por exibir os dados em forma de tabela */}
@@ -58,21 +54,20 @@ function TabelaLivro(): JSX.Element {
                 tableStyle={{ minWidth: '50rem' }} // Define um estilo mínimo para a tabela
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" // Layout dos controles de paginação
                 currentPageReportTemplate="{first} de {last} total {totalRecords}" // Texto que exibe o status da paginação
-                paginatorLeft={paginatorLeft} // Botão à esquerda da paginação
-                paginatorRight={paginatorRight} // Botão à direita da paginação
                 className={estilo['data-table']} // Classe CSS personalizada
             >
                 {/* Colunas que representam os atributos de cada livro */}
-                <Column field="titulo" header="Titulo" style={{ width: '20%' }} />
-                <Column field="autor" header="Autor" style={{ width: '20%' }} />
-                <Column field="editora" header="Editora" style={{ width: '15%' }} />
-                <Column field="isbn" header="ISBN" style={{ width: '10%' }} />
+                <Column field="titulo" header="Titulo" headerStyle={{ backgroundColor: 'var(--cor-primaria)', color: 'var(--font-color)' }} style={{ width: '20%', color: 'var(--font-color)' }} />
+                <Column field="autor" header="Autor" headerStyle={{ backgroundColor: 'var(--cor-primaria)', color: 'var(--font-color)' }} style={{ width: '20%', color: 'var(--font-color)' }} />
+                <Column field="editora" header="Editora" headerStyle={{ backgroundColor: 'var(--cor-primaria)', color: 'var(--font-color)' }} style={{ width: '15%', color: 'var(--font-color)' }} />
+                <Column field="isbn" header="ISBN" headerStyle={{ backgroundColor: 'var(--cor-primaria)', color: 'var(--font-color)' }} style={{ width: '10%', color: 'var(--font-color)' }} />
 
                 {/* Coluna que exibe o valor de aquisição formatado como moeda brasileira */}
                 <Column
                     field="valorAquisicao"
                     header="Valor de Aquisição"
-                    style={{ width: '10%' }}
+                    headerStyle={{ backgroundColor: 'var(--cor-primaria)', color: 'var(--font-color)' }}
+                    style={{ width: '10%', color: 'var(--font-color)' }}
                     body={(rowData) => {
                         const valor = Number(rowData.valorAquisicao); // Converte o valor para número
                         return valor.toLocaleString('pt-BR', {
