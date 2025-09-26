@@ -39,9 +39,9 @@ class LivroRequests {
                     'x-access-token': `${token}`
                 }
             });
-        
+
             // Verifica se a resposta da API foi bem-sucedida (status 200-299)
-            if(respostaAPI.ok) {
+            if (respostaAPI.ok) {
                 // Converte a resposta para formato JSON
                 const listaDeLivros: LivroDTO = await respostaAPI.json();
 
@@ -72,13 +72,35 @@ class LivroRequests {
                 body: formLivro
             });
 
-            if(!respostaAPI.ok) {
+            if (!respostaAPI.ok) {
                 throw new Error('Erro ao fazer requisição no servidor');
             }
 
             return true;
         } catch (error) {
             console.error(`Erro ao enviar o formulário. ${error}`);
+            return false;
+        }
+    }
+
+    async removerLivro(idLivro: number): Promise<boolean> {
+        const token = localStorage.getItem("token");
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeRemoveLivro}?idLivro=${idLivro}`, {
+                method: 'PUT',
+                headers: {
+                    'Context-type': 'application/json',
+                    'x-access-token': `${token}`
+                }
+            });
+
+            if(!respostaAPI.ok){
+                throw new Error('Erro ao fazer requisição à API');
+            }
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer solicitação. ${error}`);
             return false;
         }
     }

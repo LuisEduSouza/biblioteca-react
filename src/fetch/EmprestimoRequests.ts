@@ -74,14 +74,37 @@ class EmprestimoRequests {
                 }
             );
 
-            if (!respostaAPI.ok){
-                throw new Error ("Erro ao fazer a requisição com o servidor.");
+            if (!respostaAPI.ok) {
+                throw new Error("Erro ao fazer a requisição com o servidor.");
             }
 
             return true;
-            
+
         } catch (error) {
             console.error(`Erro ao enviar o formulário. ${error}`);
+            return false;
+        }
+    }
+
+    async removerEmprestimo(idEmprestimo: number): Promise<boolean> {
+        const token = localStorage.getItem('token');
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeRemoveEmprestimo}?idEmprestimo=${idEmprestimo}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'x-access-token': `${token}`
+                    }
+                });
+
+            if (!respostaAPI.ok){
+                throw new Error('Erro ao fazer requisição à API');
+            }
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer solicitação. ${error}`);
             return false;
         }
     }
